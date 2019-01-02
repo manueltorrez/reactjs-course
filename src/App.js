@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
-import Radium from "radium";
+import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
 
 class App extends Component {
   state = {
     people: [
-      { id: 'jfo', name: "Manuel", age: 20 },
-      { id: 'uio', name: "Ashton", age: 34 },
-      { id: 'qkj', name: "Charlie", age: 44 }
+      { id: "jfo", name: "Manuel", age: 20 },
+      { id: "uio", name: "Ashton", age: 34 },
+      { id: "qkj", name: "Charlie", age: 44 }
     ],
     otherState: "Some other value",
     showPeople: false
@@ -21,7 +21,7 @@ class App extends Component {
 
     const person = {
       ...this.state.people[personIndex]
-    }
+    };
 
     person.name = event.target.value;
 
@@ -69,7 +69,7 @@ class App extends Component {
                 age={person.age}
                 click={() => this.deletePersonHandler(index)}
                 key={person.id}
-                changed={(event) => this.nameChangedHandler(event, person.id)}
+                changed={event => this.nameChangedHandler(event, person.id)}
               />
             );
           })}
@@ -80,27 +80,29 @@ class App extends Component {
       style[":hover"] = {
         backgroundColor: "salmon",
         color: "black"
-      }
+      };
     }
 
     let classes = [];
-    if(this.state.people.length <= 2) {
-      classes.push('red'); // classes = ['red']
+    if (this.state.people.length <= 2) {
+      classes.push("red"); // classes = ['red']
     }
-    if(this.state.people.length <= 1) {
-      classes.push('bold'); // classes = ['red', 'bold']
+    if (this.state.people.length <= 1) {
+      classes.push("bold"); // classes = ['red', 'bold']
     }
 
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>Is this working?</p>
-        <button style={style} onClick={this.togglePeopleHandler}>
-          Toggle people
-        </button>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(" ")}>Is this working?</p>
+          <button style={style} onClick={this.togglePeopleHandler}>
+            Toggle people
+          </button>
 
-        {people}
-      </div>
+          {people}
+        </div>
+      </StyleRoot>
     );
   }
 }
