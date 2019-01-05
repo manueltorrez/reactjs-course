@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import classes from "./Person.module.css";
-import withClass from '../../../hoc/withClass';
+import withClass from "../../../hoc/withClass";
 
 class Person extends Component {
   constructor(props) {
@@ -16,17 +16,27 @@ class Person extends Component {
 
   componentDidMount() {
     console.log("[Person.js] Inside componentDidMount");
+    if (this.props.position === 0) {
+      this.inputElement.focus();
+    }
   }
 
   render() {
-    console.log('[Person.js] Inside render()');
+    console.log("[Person.js] Inside render()");
     return (
       <>
         <p onClick={this.props.click}>
           I'm a {this.props.name}, I guess. And I am {this.props.age} years old!
         </p>
         <p>{this.props.children}</p>
-        <input type="text" onChange={this.props.changed} value={this.props.name} />
+        <input
+          type="text"
+          ref={inp => {
+            this.inputElement = inp;
+          }}
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
       </>
     );
   }
