@@ -2,12 +2,12 @@ import React, { PureComponent } from "react";
 import classes from "./App.module.css";
 import People from "../components/People/People";
 import Cockpit from "../components/Cockpit/Cockpit";
-import withClass from '../hoc/withClass';
+import withClass from "../hoc/withClass";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    console.log('[App.js] Inside constructor', props);
+    console.log("[App.js] Inside constructor", props);
     this.state = {
       people: [
         { id: "jfo", name: "Manuel", age: 20 },
@@ -15,16 +15,17 @@ class App extends PureComponent {
         { id: "qkj", name: "Charlie", age: 44 }
       ],
       otherState: "Some other value",
-      showPeople: false
+      showPeople: false,
+      toggleClicked: 0
     };
   }
 
   componentWillMount() {
-    console.log('[App.js] Inside componentWillMount');
+    console.log("[App.js] Inside componentWillMount");
   }
 
   componentDidMount() {
-    console.log('[App.js] Inside componentDidMount');
+    console.log("[App.js] Inside componentDidMount");
   }
 
   /*shouldComponentUpdate(nextProps, nextState) {
@@ -33,11 +34,15 @@ class App extends PureComponent {
   }*/
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
+    console.log(
+      "[UPDATE App.js] Inside componentWillUpdate",
+      nextProps,
+      nextState
+    );
   }
-  
+
   componentDidUpdate() {
-    console.log('[UPDATE App.js] Inside componentDidUpdate');
+    console.log("[UPDATE App.js] Inside componentDidUpdate");
   }
 
   /*state = {
@@ -76,11 +81,16 @@ class App extends PureComponent {
 
   togglePeopleHandler = () => {
     const doesShow = this.state.showPeople;
-    this.setState({ showPeople: !doesShow });
+    this.setState((prevState, props) => {
+      return {
+        showPeople: !doesShow,
+        toggleClicked: prevState.toggleClicked + 1
+      };
+    });
   };
 
   render() {
-    console.log('[App.js] Inside render()');
+    console.log("[App.js] Inside render()");
     let people = null;
 
     if (this.state.showPeople) {
@@ -95,7 +105,13 @@ class App extends PureComponent {
 
     return (
       <>
-        <button onClick={() => {this.setState({showPeople: true})}}>Show People</button>
+        <button
+          onClick={() => {
+            this.setState({ showPeople: true });
+          }}
+        >
+          Show People
+        </button>
         <Cockpit
           showPeople={this.state.showPeople}
           people={this.state.people}
